@@ -22,7 +22,6 @@ interface employee {
 
 const employeesArray: employee[] = [];
 const ArrayPlaceholder: employee[] = [];
-
 const Home: NextPage = () => {
   const [employeesArray, setEmployees] = useState<employee[]>();
   const [InsertIDFieldValue, setInsertIDFieldValue] = useState<number>();

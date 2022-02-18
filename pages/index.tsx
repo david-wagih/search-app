@@ -21,7 +21,7 @@ interface employee {
 }
 
 const employeesArray: employee[] = [];
-const ArrayPlaceholder: employee[] = [];
+let ArrayPlaceholder: employee[] = [];
 const Home: NextPage = () => {
   const [employeesArray, setEmployees] = useState<employee[]>();
   const [InsertIDFieldValue, setInsertIDFieldValue] = useState<number>();
@@ -53,6 +53,7 @@ const Home: NextPage = () => {
     await fetch(`http://localhost:3000/api/employees/${SearchIDFieldValue}`)
       .then((response) => response.json())
       .then((data) => {
+        ArrayPlaceholder = [];
         ArrayPlaceholder.push(data.data);
         setEmployees(ArrayPlaceholder);
       });

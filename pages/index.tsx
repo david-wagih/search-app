@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import React, { useEffect, useState } from "react";
+import React, { ReactEventHandler, useEffect, useState } from "react";
 import {
   Button,
   Paper,
@@ -18,13 +18,28 @@ interface employee {
   _id: number;
   id: number;
   name: string;
-  data: any;
 }
 
 const employeesArray: employee[] = [];
 
 const Home: NextPage = (props) => {
-  const [employees, setEmployees] = useState<employee[]>();
+  const [employeesArray, setEmployees] = useState<employee[]>();
+  const [InsertIDFieldValue, setInsertIDFieldValue] = useState<number>();
+  const [SearchIDFieldValue, setSearchIDFieldValue] = useState<number>();
+  const [InsertNameFieldValue, setInsertNameFieldValue] = useState<string>();
+  const [DeleteIDFieldValue, setDeleteIDFieldValue] = useState<number>();
+  const handleInsertIDField = (e: any) => {
+    setInsertIDFieldValue(e.target.value);
+  };
+  const handleInsertNameField = (e: any) => {
+    setInsertNameFieldValue(e.target.value);
+  };
+  const handleSearchIDField = (e: any) => {
+    setSearchIDFieldValue(e.target.value);
+  };
+  const handleDeleteIDField = (e: any) => {
+    setDeleteIDFieldValue(e.target.value);
+  };
 
   // useEffect(() => {
   //   fetch("http://localhost:3000/api/employees")
@@ -41,15 +56,18 @@ const Home: NextPage = (props) => {
     await fetch("http://localhost:3000/api/employees")
       .then((response) => response.json())
       .then((data) => {
-        setEmployees(data);
-        console.log(data.data);
+        setEmployees(data.data);
       });
   };
+
+  // Todo : Solve the error in this one
   const SearchById = async () => {
-    await fetch("http://localhost:3000/api/employees/1")
+    await fetch(`http://localhost:3000/api/employees/${SearchIDFieldValue}`, {
+      method: "GET",
+    })
       .then((response) => response.json())
       .then((data) => {
-        setEmployees(data);
+        setEmployees(data.data);
       });
   };
   const InsertNewEmployee = async () => {
@@ -59,13 +77,13 @@ const Home: NextPage = (props) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id: "John Doe",
-        name: "" + Math.random() + "@gmail.com",
+        id: InsertIDFieldValue,
+        name: InsertNameFieldValue,
       }),
     });
   };
   const DeleteEmployee = async () => {
-    await fetch("http://localhost:3000/api/employees/1", {
+    await fetch(`http://localhost:3000/api/employees/${DeleteIDFieldValue}`, {
       method: "DELETE",
     });
   };
@@ -97,7 +115,8 @@ const Home: NextPage = (props) => {
             Search By ID
           </Button>
           <TextField
-            className="searchId"
+            value={SearchIDFieldValue}
+            onChange={handleSearchIDField}
             id="outlined-basic"
             label="ID"
             variant="outlined"
@@ -116,14 +135,17 @@ const Home: NextPage = (props) => {
             Insert new Employee
           </Button>
           <TextField
-            className="InsertID"
+            margin="normal"
+            value={InsertIDFieldValue}
+            onChange={handleInsertIDField}
             id="outlined-basic"
             label="Id"
             variant="outlined"
             type={`number`}
           />
           <TextField
-            className="InsertName"
+            value={InsertNameFieldValue}
+            onChange={handleInsertNameField}
             id="outlined-basic"
             label="Name"
             variant="outlined"
@@ -142,7 +164,8 @@ const Home: NextPage = (props) => {
             Delete an Employee
           </Button>
           <TextField
-            className="DeleteID"
+            value={DeleteIDFieldValue}
+            onChange={handleDeleteIDField}
             id="outlined-basic"
             label="ID"
             variant="outlined"
@@ -178,9 +201,9 @@ const Home: NextPage = (props) => {
           <TableBody>
             {employeesArray &&
               employeesArray.map((employee) => (
-                <TableRow key={employee.data.id}>
-                  <TableCell>{employee.data.id}</TableCell>
-                  <TableCell>{employee.data.name}</TableCell>
+                <TableRow key={employee.id}>
+                  <TableCell>{employee.id}</TableCell>
+                  <TableCell>{employee.name}</TableCell>
                 </TableRow>
               ))}
           </TableBody>

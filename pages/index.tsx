@@ -21,8 +21,9 @@ interface employee {
 }
 
 const employeesArray: employee[] = [];
+const ArrayPlaceholder: employee[] = [];
 
-const Home: NextPage = (props) => {
+const Home: NextPage = () => {
   const [employeesArray, setEmployees] = useState<employee[]>();
   const [InsertIDFieldValue, setInsertIDFieldValue] = useState<number>();
   const [SearchIDFieldValue, setSearchIDFieldValue] = useState<number>();
@@ -41,17 +42,6 @@ const Home: NextPage = (props) => {
     setDeleteIDFieldValue(e.target.value);
   };
 
-  // useEffect(() => {
-  //   fetch("http://localhost:3000/api/employees")
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setEmployees(data);
-  //       employeesArray.push(data);
-  //       console.log(employeesArray);
-  //     }),
-  //     [];
-  // });
-
   const GetAllEmployees = async () => {
     await fetch("http://localhost:3000/api/employees")
       .then((response) => response.json())
@@ -60,14 +50,12 @@ const Home: NextPage = (props) => {
       });
   };
 
-  // Todo : Solve the error in this one
   const SearchById = async () => {
-    await fetch(`http://localhost:3000/api/employees/${SearchIDFieldValue}`, {
-      method: "GET",
-    })
+    await fetch(`http://localhost:3000/api/employees/${SearchIDFieldValue}`)
       .then((response) => response.json())
       .then((data) => {
-        setEmployees(data.data);
+        ArrayPlaceholder.push(data.data);
+        setEmployees(ArrayPlaceholder);
       });
   };
   const InsertNewEmployee = async () => {
@@ -212,15 +200,5 @@ const Home: NextPage = (props) => {
     </div>
   );
 };
-
-export async function getServerSideProps(context: any) {
-  const res = await fetch("http://localhost:3000/api/employees");
-  const data = await res.json();
-  return {
-    props: {
-      data,
-    },
-  };
-}
 
 export default Home;

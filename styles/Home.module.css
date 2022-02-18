@@ -1,5 +1,9 @@
 .container {
-  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: auto;
+  padding: 10px;
 }
 
 .main {
@@ -113,4 +117,36 @@
     width: 100%;
     flex-direction: column;
   }
+}
+
+.button {
+  cursor: pointer;
+  background: #f37500;
+  color: #fff;
+  max-width: 250px;
+  border-radius: 10px;
+  padding: 12px;
+  margin: 5px 10px;
+}
+
+.buttonsList {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  margin: 5 5 5 5;
+  align-items: left;
+  flex-wrap: wrap;
+  max-width: 300px;
+}
+
+.inputField {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 10px;
+  box-sizing: border-box;
+  border: 5px solid;
+  border-bottom: 2px solid #f37500;
+  background: #fafafa;
+  font-size: 1.25rem;
+  justify-content: center;
 }

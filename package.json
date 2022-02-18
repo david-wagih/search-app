@@ -8,13 +8,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@mui/material": "^5.4.2",
+    "mongodb": "^4.3.1",
+    "mongoose": "^6.2.2",
     "next": "12.0.10",
+    "next-connect": "^0.12.1",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-table": "^7.7.0"
   },
   "devDependencies": {
     "@types/node": "17.0.18",
     "@types/react": "17.0.39",
+    "@types/react-table": "^7.7.9",
     "eslint": "8.9.0",
     "eslint-config-next": "12.0.10",
     "typescript": "4.5.5"
